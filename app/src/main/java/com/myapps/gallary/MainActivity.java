@@ -6,12 +6,14 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,7 +27,7 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView rcv;
-    private ImageButton deletebtn;
+    private FloatingActionButton add;
     private ProgressBar progressBar;
     private ArrayList<String> list;
     private GalleryAdapter adapter;
@@ -37,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         rcv = findViewById(R.id.recyclerview);
-        deletebtn = findViewById(R.id.deletebtn);
+        add = findViewById(R.id.addbtn);
         progressBar = findViewById(R.id.progressBar);
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("images");
@@ -65,5 +67,14 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Error : "+error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, adding_image.class);
+                startActivity(intent);
+            }
+        });
+
     }
 }
